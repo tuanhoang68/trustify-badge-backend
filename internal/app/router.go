@@ -70,7 +70,7 @@ func NewRouter(db *gorm.DB) *gin.Engine {
 		}
 
 		var cfg storage.BadgeConfig
-		if err := db.Where("shop_domain = ?", shop).First(&cfg).Error; err != nil {
+		if err := db.Where("shop_id = ?", shop).First(&cfg).Error; err != nil {
 			if err.Error() == "record not found" {
 				c.JSON(http.StatusOK, gin.H{"data": nil})
 				return
@@ -87,13 +87,13 @@ func NewRouter(db *gorm.DB) *gin.Engine {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid body"})
 			return
 		}
-		if body.ShopDomain == "" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "missing shop_domain"})
+		if body.ShopID == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "missing shop_id"})
 			return
 		}
-		// Upsert by shop_domain
+		// Upsert by shop_id
 		var existing storage.BadgeConfig
-		err := db.Where("shop_domain = ?", body.ShopDomain).First(&existing).Error
+		err := db.Where("shop_id = ?", body.ShopID).First(&existing).Error
 		if err == nil {
 			body.ID = existing.ID
 		}
@@ -114,7 +114,7 @@ func NewRouter(db *gorm.DB) *gin.Engine {
 			return
 		}
 		var cfg storage.BadgeConfig
-		if err := db.Where("shop_domain = ?", shop).First(&cfg).Error; err != nil {
+		if err := db.Where("shop_id = ?", shop).First(&cfg).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"data": nil})
 			return
 		}
