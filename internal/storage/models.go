@@ -7,13 +7,13 @@ import (
 )
 
 type Shop struct {
-	ID          string `gorm:"type:char(36);primaryKey"`
-	ShopDomain  string `gorm:"uniqueIndex;not null"`
+	ID string `gorm:"type:char(36);primaryKey"`
+	// Thêm size:255 hoặc type:varchar(255)
+	ShopDomain  string `gorm:"type:varchar(255);uniqueIndex;not null"`
 	AccessToken string `gorm:"not null"`
 	InstalledAt time.Time
 	UpdatedAt   time.Time
 
-	// Quan hệ 1-n: một shop có nhiều badge config
 	BadgeConfigs []BadgeConfig `gorm:"foreignKey:ShopID;constraint:OnDelete:CASCADE"`
 }
 
