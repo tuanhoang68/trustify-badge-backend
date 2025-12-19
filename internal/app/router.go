@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	"github.com/your-org/trustify-badge-backend/internal/shopify"
-	"github.com/your-org/trustify-badge-backend/internal/storage"
+	"github.com/tuanhoang68/trustify-badge-backend/internal/shopify"
+	"github.com/tuanhoang68/trustify-badge-backend/internal/storage"
 )
 
 func NewRouter(db *gorm.DB) *gin.Engine {
@@ -42,7 +42,7 @@ func NewRouter(db *gorm.DB) *gin.Engine {
 		code := q.Get("code")
 
 		// Exchange code for access token
-		token, err := exchangeToken(shop, code)
+		token, err := shopify.ExchangeToken(shop, code)
 		if err != nil {
 			c.JSON(http.StatusBadGateway, gin.H{"error": "token exchange failed"})
 			return

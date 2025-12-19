@@ -27,7 +27,7 @@ type tokenResp struct {
 	Scope       string `json:"scope"`
 }
 
-func exchangeToken(shop, code string) (string, error) {
+func ExchangeToken(shop, code string) (string, error) {
 	endpoint := fmt.Sprintf("https://%s/admin/oauth/access_token", shop)
 	payload := map[string]string{"client_id": os.Getenv("SHOPIFY_API_KEY"), "client_secret": os.Getenv("SHOPIFY_API_SECRET"), "code": code}
 	b, _ := json.Marshal(payload)
